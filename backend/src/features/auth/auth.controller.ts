@@ -7,9 +7,9 @@ import adminDao from "../admin/admin.dao";
 const AuthController = {
   // ------------------- REGISTER -------------------
   adminRegister: async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, college } = req.body;
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password || !college) {
       return res
         .status(HttpStatus.BAD_REQUEST)
         .json({ message: "Name, email, and password are required" });
@@ -29,6 +29,7 @@ const AuthController = {
         name,
         email,
         password: hashedPassword,
+        college: college,
       });
 
       const token = await setToken(newAdmin._id.toString());

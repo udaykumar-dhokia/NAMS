@@ -20,7 +20,12 @@ class AdminDAO {
 
   // ----------------- CREATE -----------------
 
-  async create(payload: { name: string; email: string; password: string }) {
+  async create(payload: {
+    name: string;
+    email: string;
+    password: string;
+    college: string;
+  }) {
     const admin = new adminModel(payload);
     return await admin.save();
   }

@@ -12,6 +12,10 @@ const qrCodeSchema = new mongoose.Schema(
       ref: "Attendance",
       required: true,
     },
+    image_url: {
+      type: String,
+      default: null,
+    },
   },
   { timestamps: true }
 );

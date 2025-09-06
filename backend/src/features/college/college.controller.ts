@@ -16,7 +16,7 @@ const CollegeController = {
       const college = await collegeDao.create({ name, address, contact });
       return res.status(HttpStatus.CREATED).json({
         message: "College created successfully",
-        college,
+        id: college._id,
       });
     } catch (error) {
       console.error("College Create Error:", error);
