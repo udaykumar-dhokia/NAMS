@@ -29,6 +29,11 @@ const courseSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Faculty",
     },
+    college: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "College",
+      required: true,
+    },
     type: {
       type: String,
       enum: ["core", "elective", "lab"],

@@ -27,12 +27,12 @@ const departmentSchema = new mongoose.Schema(
     ],
     hod: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User", // Head of Department (will come from User schema)
+      ref: "Faculty",
     },
     faculty: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User", // other faculty members
+        ref: "Faculty",
       },
     ],
   },

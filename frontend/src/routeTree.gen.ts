@@ -16,7 +16,10 @@ import { Route as PublicAuthLayoutRouteImport } from './routes/_public/auth/_lay
 import { Route as ProtectedAdminLayoutRouteImport } from './routes/_protected/admin/_layout'
 import { Route as PublicAuthLayoutRegisterRouteImport } from './routes/_public/auth/_layout.register'
 import { Route as PublicAuthLayoutLoginRouteImport } from './routes/_public/auth/_layout.login'
+import { Route as ProtectedAdminLayoutDepartmentsRouteImport } from './routes/_protected/admin/_layout.departments'
+import { Route as ProtectedAdminLayoutDegreesRouteImport } from './routes/_protected/admin/_layout.degrees'
 import { Route as ProtectedAdminLayoutDashboardRouteImport } from './routes/_protected/admin/_layout.dashboard'
+import { Route as ProtectedAdminLayoutCoursesRouteImport } from './routes/_protected/admin/_layout.courses'
 
 const PublicAuthRouteImport = createFileRoute('/_public/auth')()
 const ProtectedAdminRouteImport = createFileRoute('/_protected/admin')()
@@ -55,10 +58,28 @@ const PublicAuthLayoutLoginRoute = PublicAuthLayoutLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => PublicAuthLayoutRoute,
 } as any)
+const ProtectedAdminLayoutDepartmentsRoute =
+  ProtectedAdminLayoutDepartmentsRouteImport.update({
+    id: '/departments',
+    path: '/departments',
+    getParentRoute: () => ProtectedAdminLayoutRoute,
+  } as any)
+const ProtectedAdminLayoutDegreesRoute =
+  ProtectedAdminLayoutDegreesRouteImport.update({
+    id: '/degrees',
+    path: '/degrees',
+    getParentRoute: () => ProtectedAdminLayoutRoute,
+  } as any)
 const ProtectedAdminLayoutDashboardRoute =
   ProtectedAdminLayoutDashboardRouteImport.update({
     id: '/dashboard',
     path: '/dashboard',
+    getParentRoute: () => ProtectedAdminLayoutRoute,
+  } as any)
+const ProtectedAdminLayoutCoursesRoute =
+  ProtectedAdminLayoutCoursesRouteImport.update({
+    id: '/courses',
+    path: '/courses',
     getParentRoute: () => ProtectedAdminLayoutRoute,
   } as any)
 
@@ -66,7 +87,10 @@ export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
   '/admin': typeof ProtectedAdminLayoutRouteWithChildren
   '/auth': typeof PublicAuthLayoutRouteWithChildren
+  '/admin/courses': typeof ProtectedAdminLayoutCoursesRoute
   '/admin/dashboard': typeof ProtectedAdminLayoutDashboardRoute
+  '/admin/degrees': typeof ProtectedAdminLayoutDegreesRoute
+  '/admin/departments': typeof ProtectedAdminLayoutDepartmentsRoute
   '/auth/login': typeof PublicAuthLayoutLoginRoute
   '/auth/register': typeof PublicAuthLayoutRegisterRoute
 }
@@ -74,7 +98,10 @@ export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
   '/admin': typeof ProtectedAdminLayoutRouteWithChildren
   '/auth': typeof PublicAuthLayoutRouteWithChildren
+  '/admin/courses': typeof ProtectedAdminLayoutCoursesRoute
   '/admin/dashboard': typeof ProtectedAdminLayoutDashboardRoute
+  '/admin/degrees': typeof ProtectedAdminLayoutDegreesRoute
+  '/admin/departments': typeof ProtectedAdminLayoutDepartmentsRoute
   '/auth/login': typeof PublicAuthLayoutLoginRoute
   '/auth/register': typeof PublicAuthLayoutRegisterRoute
 }
@@ -85,7 +112,10 @@ export interface FileRoutesById {
   '/_protected/admin/_layout': typeof ProtectedAdminLayoutRouteWithChildren
   '/_public/auth': typeof PublicAuthRouteWithChildren
   '/_public/auth/_layout': typeof PublicAuthLayoutRouteWithChildren
+  '/_protected/admin/_layout/courses': typeof ProtectedAdminLayoutCoursesRoute
   '/_protected/admin/_layout/dashboard': typeof ProtectedAdminLayoutDashboardRoute
+  '/_protected/admin/_layout/degrees': typeof ProtectedAdminLayoutDegreesRoute
+  '/_protected/admin/_layout/departments': typeof ProtectedAdminLayoutDepartmentsRoute
   '/_public/auth/_layout/login': typeof PublicAuthLayoutLoginRoute
   '/_public/auth/_layout/register': typeof PublicAuthLayoutRegisterRoute
 }
@@ -95,7 +125,10 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/auth'
+    | '/admin/courses'
     | '/admin/dashboard'
+    | '/admin/degrees'
+    | '/admin/departments'
     | '/auth/login'
     | '/auth/register'
   fileRoutesByTo: FileRoutesByTo
@@ -103,7 +136,10 @@ export interface FileRouteTypes {
     | '/'
     | '/admin'
     | '/auth'
+    | '/admin/courses'
     | '/admin/dashboard'
+    | '/admin/degrees'
+    | '/admin/departments'
     | '/auth/login'
     | '/auth/register'
   id:
@@ -113,7 +149,10 @@ export interface FileRouteTypes {
     | '/_protected/admin/_layout'
     | '/_public/auth'
     | '/_public/auth/_layout'
+    | '/_protected/admin/_layout/courses'
     | '/_protected/admin/_layout/dashboard'
+    | '/_protected/admin/_layout/degrees'
+    | '/_protected/admin/_layout/departments'
     | '/_public/auth/_layout/login'
     | '/_public/auth/_layout/register'
   fileRoutesById: FileRoutesById
@@ -175,6 +214,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAuthLayoutLoginRouteImport
       parentRoute: typeof PublicAuthLayoutRoute
     }
+    '/_protected/admin/_layout/departments': {
+      id: '/_protected/admin/_layout/departments'
+      path: '/departments'
+      fullPath: '/admin/departments'
+      preLoaderRoute: typeof ProtectedAdminLayoutDepartmentsRouteImport
+      parentRoute: typeof ProtectedAdminLayoutRoute
+    }
+    '/_protected/admin/_layout/degrees': {
+      id: '/_protected/admin/_layout/degrees'
+      path: '/degrees'
+      fullPath: '/admin/degrees'
+      preLoaderRoute: typeof ProtectedAdminLayoutDegreesRouteImport
+      parentRoute: typeof ProtectedAdminLayoutRoute
+    }
     '/_protected/admin/_layout/dashboard': {
       id: '/_protected/admin/_layout/dashboard'
       path: '/dashboard'
@@ -182,15 +235,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProtectedAdminLayoutDashboardRouteImport
       parentRoute: typeof ProtectedAdminLayoutRoute
     }
+    '/_protected/admin/_layout/courses': {
+      id: '/_protected/admin/_layout/courses'
+      path: '/courses'
+      fullPath: '/admin/courses'
+      preLoaderRoute: typeof ProtectedAdminLayoutCoursesRouteImport
+      parentRoute: typeof ProtectedAdminLayoutRoute
+    }
   }
 }
 
 interface ProtectedAdminLayoutRouteChildren {
+  ProtectedAdminLayoutCoursesRoute: typeof ProtectedAdminLayoutCoursesRoute
   ProtectedAdminLayoutDashboardRoute: typeof ProtectedAdminLayoutDashboardRoute
+  ProtectedAdminLayoutDegreesRoute: typeof ProtectedAdminLayoutDegreesRoute
+  ProtectedAdminLayoutDepartmentsRoute: typeof ProtectedAdminLayoutDepartmentsRoute
 }
 
 const ProtectedAdminLayoutRouteChildren: ProtectedAdminLayoutRouteChildren = {
+  ProtectedAdminLayoutCoursesRoute: ProtectedAdminLayoutCoursesRoute,
   ProtectedAdminLayoutDashboardRoute: ProtectedAdminLayoutDashboardRoute,
+  ProtectedAdminLayoutDegreesRoute: ProtectedAdminLayoutDegreesRoute,
+  ProtectedAdminLayoutDepartmentsRoute: ProtectedAdminLayoutDepartmentsRoute,
 }
 
 const ProtectedAdminLayoutRouteWithChildren =
