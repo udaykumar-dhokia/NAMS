@@ -13,20 +13,31 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as PublicAuthLayoutRouteImport } from './routes/_public/auth/_layout'
+import { Route as ProtectedFacultyLayoutRouteImport } from './routes/_protected/faculty/_layout'
 import { Route as ProtectedAdminLayoutRouteImport } from './routes/_protected/admin/_layout'
 import { Route as PublicAuthLayoutRegisterRouteImport } from './routes/_public/auth/_layout.register'
 import { Route as PublicAuthLayoutLoginRouteImport } from './routes/_public/auth/_layout.login'
+import { Route as ProtectedFacultyAttendanceQrIdRouteImport } from './routes/_protected/faculty/attendance/$qrId'
+import { Route as ProtectedFacultyLayoutDashboardRouteImport } from './routes/_protected/faculty/_layout.dashboard'
+import { Route as ProtectedAdminLayoutTimetableRouteImport } from './routes/_protected/admin/_layout.timetable'
+import { Route as ProtectedAdminLayoutStudentsRouteImport } from './routes/_protected/admin/_layout.students'
 import { Route as ProtectedAdminLayoutDepartmentsRouteImport } from './routes/_protected/admin/_layout.departments'
 import { Route as ProtectedAdminLayoutDegreesRouteImport } from './routes/_protected/admin/_layout.degrees'
 import { Route as ProtectedAdminLayoutDashboardRouteImport } from './routes/_protected/admin/_layout.dashboard'
 import { Route as ProtectedAdminLayoutCoursesRouteImport } from './routes/_protected/admin/_layout.courses'
 
 const PublicAuthRouteImport = createFileRoute('/_public/auth')()
+const ProtectedFacultyRouteImport = createFileRoute('/_protected/faculty')()
 const ProtectedAdminRouteImport = createFileRoute('/_protected/admin')()
 
 const PublicAuthRoute = PublicAuthRouteImport.update({
   id: '/_public/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProtectedFacultyRoute = ProtectedFacultyRouteImport.update({
+  id: '/_protected/faculty',
+  path: '/faculty',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProtectedAdminRoute = ProtectedAdminRouteImport.update({
@@ -43,6 +54,10 @@ const PublicAuthLayoutRoute = PublicAuthLayoutRouteImport.update({
   id: '/_layout',
   getParentRoute: () => PublicAuthRoute,
 } as any)
+const ProtectedFacultyLayoutRoute = ProtectedFacultyLayoutRouteImport.update({
+  id: '/_layout',
+  getParentRoute: () => ProtectedFacultyRoute,
+} as any)
 const ProtectedAdminLayoutRoute = ProtectedAdminLayoutRouteImport.update({
   id: '/_layout',
   getParentRoute: () => ProtectedAdminRoute,
@@ -58,6 +73,30 @@ const PublicAuthLayoutLoginRoute = PublicAuthLayoutLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => PublicAuthLayoutRoute,
 } as any)
+const ProtectedFacultyAttendanceQrIdRoute =
+  ProtectedFacultyAttendanceQrIdRouteImport.update({
+    id: '/attendance/$qrId',
+    path: '/attendance/$qrId',
+    getParentRoute: () => ProtectedFacultyRoute,
+  } as any)
+const ProtectedFacultyLayoutDashboardRoute =
+  ProtectedFacultyLayoutDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => ProtectedFacultyLayoutRoute,
+  } as any)
+const ProtectedAdminLayoutTimetableRoute =
+  ProtectedAdminLayoutTimetableRouteImport.update({
+    id: '/timetable',
+    path: '/timetable',
+    getParentRoute: () => ProtectedAdminLayoutRoute,
+  } as any)
+const ProtectedAdminLayoutStudentsRoute =
+  ProtectedAdminLayoutStudentsRouteImport.update({
+    id: '/students',
+    path: '/students',
+    getParentRoute: () => ProtectedAdminLayoutRoute,
+  } as any)
 const ProtectedAdminLayoutDepartmentsRoute =
   ProtectedAdminLayoutDepartmentsRouteImport.update({
     id: '/departments',
@@ -86,22 +125,32 @@ const ProtectedAdminLayoutCoursesRoute =
 export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
   '/admin': typeof ProtectedAdminLayoutRouteWithChildren
+  '/faculty': typeof ProtectedFacultyLayoutRouteWithChildren
   '/auth': typeof PublicAuthLayoutRouteWithChildren
   '/admin/courses': typeof ProtectedAdminLayoutCoursesRoute
   '/admin/dashboard': typeof ProtectedAdminLayoutDashboardRoute
   '/admin/degrees': typeof ProtectedAdminLayoutDegreesRoute
   '/admin/departments': typeof ProtectedAdminLayoutDepartmentsRoute
+  '/admin/students': typeof ProtectedAdminLayoutStudentsRoute
+  '/admin/timetable': typeof ProtectedAdminLayoutTimetableRoute
+  '/faculty/dashboard': typeof ProtectedFacultyLayoutDashboardRoute
+  '/faculty/attendance/$qrId': typeof ProtectedFacultyAttendanceQrIdRoute
   '/auth/login': typeof PublicAuthLayoutLoginRoute
   '/auth/register': typeof PublicAuthLayoutRegisterRoute
 }
 export interface FileRoutesByTo {
   '/': typeof PublicIndexRoute
   '/admin': typeof ProtectedAdminLayoutRouteWithChildren
+  '/faculty': typeof ProtectedFacultyLayoutRouteWithChildren
   '/auth': typeof PublicAuthLayoutRouteWithChildren
   '/admin/courses': typeof ProtectedAdminLayoutCoursesRoute
   '/admin/dashboard': typeof ProtectedAdminLayoutDashboardRoute
   '/admin/degrees': typeof ProtectedAdminLayoutDegreesRoute
   '/admin/departments': typeof ProtectedAdminLayoutDepartmentsRoute
+  '/admin/students': typeof ProtectedAdminLayoutStudentsRoute
+  '/admin/timetable': typeof ProtectedAdminLayoutTimetableRoute
+  '/faculty/dashboard': typeof ProtectedFacultyLayoutDashboardRoute
+  '/faculty/attendance/$qrId': typeof ProtectedFacultyAttendanceQrIdRoute
   '/auth/login': typeof PublicAuthLayoutLoginRoute
   '/auth/register': typeof PublicAuthLayoutRegisterRoute
 }
@@ -110,12 +159,18 @@ export interface FileRoutesById {
   '/_public/': typeof PublicIndexRoute
   '/_protected/admin': typeof ProtectedAdminRouteWithChildren
   '/_protected/admin/_layout': typeof ProtectedAdminLayoutRouteWithChildren
+  '/_protected/faculty': typeof ProtectedFacultyRouteWithChildren
+  '/_protected/faculty/_layout': typeof ProtectedFacultyLayoutRouteWithChildren
   '/_public/auth': typeof PublicAuthRouteWithChildren
   '/_public/auth/_layout': typeof PublicAuthLayoutRouteWithChildren
   '/_protected/admin/_layout/courses': typeof ProtectedAdminLayoutCoursesRoute
   '/_protected/admin/_layout/dashboard': typeof ProtectedAdminLayoutDashboardRoute
   '/_protected/admin/_layout/degrees': typeof ProtectedAdminLayoutDegreesRoute
   '/_protected/admin/_layout/departments': typeof ProtectedAdminLayoutDepartmentsRoute
+  '/_protected/admin/_layout/students': typeof ProtectedAdminLayoutStudentsRoute
+  '/_protected/admin/_layout/timetable': typeof ProtectedAdminLayoutTimetableRoute
+  '/_protected/faculty/_layout/dashboard': typeof ProtectedFacultyLayoutDashboardRoute
+  '/_protected/faculty/attendance/$qrId': typeof ProtectedFacultyAttendanceQrIdRoute
   '/_public/auth/_layout/login': typeof PublicAuthLayoutLoginRoute
   '/_public/auth/_layout/register': typeof PublicAuthLayoutRegisterRoute
 }
@@ -124,22 +179,32 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/faculty'
     | '/auth'
     | '/admin/courses'
     | '/admin/dashboard'
     | '/admin/degrees'
     | '/admin/departments'
+    | '/admin/students'
+    | '/admin/timetable'
+    | '/faculty/dashboard'
+    | '/faculty/attendance/$qrId'
     | '/auth/login'
     | '/auth/register'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
+    | '/faculty'
     | '/auth'
     | '/admin/courses'
     | '/admin/dashboard'
     | '/admin/degrees'
     | '/admin/departments'
+    | '/admin/students'
+    | '/admin/timetable'
+    | '/faculty/dashboard'
+    | '/faculty/attendance/$qrId'
     | '/auth/login'
     | '/auth/register'
   id:
@@ -147,12 +212,18 @@ export interface FileRouteTypes {
     | '/_public/'
     | '/_protected/admin'
     | '/_protected/admin/_layout'
+    | '/_protected/faculty'
+    | '/_protected/faculty/_layout'
     | '/_public/auth'
     | '/_public/auth/_layout'
     | '/_protected/admin/_layout/courses'
     | '/_protected/admin/_layout/dashboard'
     | '/_protected/admin/_layout/degrees'
     | '/_protected/admin/_layout/departments'
+    | '/_protected/admin/_layout/students'
+    | '/_protected/admin/_layout/timetable'
+    | '/_protected/faculty/_layout/dashboard'
+    | '/_protected/faculty/attendance/$qrId'
     | '/_public/auth/_layout/login'
     | '/_public/auth/_layout/register'
   fileRoutesById: FileRoutesById
@@ -160,6 +231,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   PublicIndexRoute: typeof PublicIndexRoute
   ProtectedAdminRoute: typeof ProtectedAdminRouteWithChildren
+  ProtectedFacultyRoute: typeof ProtectedFacultyRouteWithChildren
   PublicAuthRoute: typeof PublicAuthRouteWithChildren
 }
 
@@ -170,6 +242,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof PublicAuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_protected/faculty': {
+      id: '/_protected/faculty'
+      path: '/faculty'
+      fullPath: '/faculty'
+      preLoaderRoute: typeof ProtectedFacultyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_protected/admin': {
@@ -193,6 +272,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicAuthLayoutRouteImport
       parentRoute: typeof PublicAuthRoute
     }
+    '/_protected/faculty/_layout': {
+      id: '/_protected/faculty/_layout'
+      path: '/faculty'
+      fullPath: '/faculty'
+      preLoaderRoute: typeof ProtectedFacultyLayoutRouteImport
+      parentRoute: typeof ProtectedFacultyRoute
+    }
     '/_protected/admin/_layout': {
       id: '/_protected/admin/_layout'
       path: '/admin'
@@ -213,6 +299,34 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth/login'
       preLoaderRoute: typeof PublicAuthLayoutLoginRouteImport
       parentRoute: typeof PublicAuthLayoutRoute
+    }
+    '/_protected/faculty/attendance/$qrId': {
+      id: '/_protected/faculty/attendance/$qrId'
+      path: '/attendance/$qrId'
+      fullPath: '/faculty/attendance/$qrId'
+      preLoaderRoute: typeof ProtectedFacultyAttendanceQrIdRouteImport
+      parentRoute: typeof ProtectedFacultyRoute
+    }
+    '/_protected/faculty/_layout/dashboard': {
+      id: '/_protected/faculty/_layout/dashboard'
+      path: '/dashboard'
+      fullPath: '/faculty/dashboard'
+      preLoaderRoute: typeof ProtectedFacultyLayoutDashboardRouteImport
+      parentRoute: typeof ProtectedFacultyLayoutRoute
+    }
+    '/_protected/admin/_layout/timetable': {
+      id: '/_protected/admin/_layout/timetable'
+      path: '/timetable'
+      fullPath: '/admin/timetable'
+      preLoaderRoute: typeof ProtectedAdminLayoutTimetableRouteImport
+      parentRoute: typeof ProtectedAdminLayoutRoute
+    }
+    '/_protected/admin/_layout/students': {
+      id: '/_protected/admin/_layout/students'
+      path: '/students'
+      fullPath: '/admin/students'
+      preLoaderRoute: typeof ProtectedAdminLayoutStudentsRouteImport
+      parentRoute: typeof ProtectedAdminLayoutRoute
     }
     '/_protected/admin/_layout/departments': {
       id: '/_protected/admin/_layout/departments'
@@ -250,6 +364,8 @@ interface ProtectedAdminLayoutRouteChildren {
   ProtectedAdminLayoutDashboardRoute: typeof ProtectedAdminLayoutDashboardRoute
   ProtectedAdminLayoutDegreesRoute: typeof ProtectedAdminLayoutDegreesRoute
   ProtectedAdminLayoutDepartmentsRoute: typeof ProtectedAdminLayoutDepartmentsRoute
+  ProtectedAdminLayoutStudentsRoute: typeof ProtectedAdminLayoutStudentsRoute
+  ProtectedAdminLayoutTimetableRoute: typeof ProtectedAdminLayoutTimetableRoute
 }
 
 const ProtectedAdminLayoutRouteChildren: ProtectedAdminLayoutRouteChildren = {
@@ -257,6 +373,8 @@ const ProtectedAdminLayoutRouteChildren: ProtectedAdminLayoutRouteChildren = {
   ProtectedAdminLayoutDashboardRoute: ProtectedAdminLayoutDashboardRoute,
   ProtectedAdminLayoutDegreesRoute: ProtectedAdminLayoutDegreesRoute,
   ProtectedAdminLayoutDepartmentsRoute: ProtectedAdminLayoutDepartmentsRoute,
+  ProtectedAdminLayoutStudentsRoute: ProtectedAdminLayoutStudentsRoute,
+  ProtectedAdminLayoutTimetableRoute: ProtectedAdminLayoutTimetableRoute,
 }
 
 const ProtectedAdminLayoutRouteWithChildren =
@@ -273,6 +391,33 @@ const ProtectedAdminRouteChildren: ProtectedAdminRouteChildren = {
 const ProtectedAdminRouteWithChildren = ProtectedAdminRoute._addFileChildren(
   ProtectedAdminRouteChildren,
 )
+
+interface ProtectedFacultyLayoutRouteChildren {
+  ProtectedFacultyLayoutDashboardRoute: typeof ProtectedFacultyLayoutDashboardRoute
+}
+
+const ProtectedFacultyLayoutRouteChildren: ProtectedFacultyLayoutRouteChildren =
+  {
+    ProtectedFacultyLayoutDashboardRoute: ProtectedFacultyLayoutDashboardRoute,
+  }
+
+const ProtectedFacultyLayoutRouteWithChildren =
+  ProtectedFacultyLayoutRoute._addFileChildren(
+    ProtectedFacultyLayoutRouteChildren,
+  )
+
+interface ProtectedFacultyRouteChildren {
+  ProtectedFacultyLayoutRoute: typeof ProtectedFacultyLayoutRouteWithChildren
+  ProtectedFacultyAttendanceQrIdRoute: typeof ProtectedFacultyAttendanceQrIdRoute
+}
+
+const ProtectedFacultyRouteChildren: ProtectedFacultyRouteChildren = {
+  ProtectedFacultyLayoutRoute: ProtectedFacultyLayoutRouteWithChildren,
+  ProtectedFacultyAttendanceQrIdRoute: ProtectedFacultyAttendanceQrIdRoute,
+}
+
+const ProtectedFacultyRouteWithChildren =
+  ProtectedFacultyRoute._addFileChildren(ProtectedFacultyRouteChildren)
 
 interface PublicAuthLayoutRouteChildren {
   PublicAuthLayoutLoginRoute: typeof PublicAuthLayoutLoginRoute
@@ -302,6 +447,7 @@ const PublicAuthRouteWithChildren = PublicAuthRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   PublicIndexRoute: PublicIndexRoute,
   ProtectedAdminRoute: ProtectedAdminRouteWithChildren,
+  ProtectedFacultyRoute: ProtectedFacultyRouteWithChildren,
   PublicAuthRoute: PublicAuthRouteWithChildren,
 }
 export const routeTree = rootRouteImport

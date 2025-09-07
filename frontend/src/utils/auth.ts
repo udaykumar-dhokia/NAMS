@@ -45,3 +45,32 @@ export const persistCourseData = async (collegeId: string) => {
     return []
   }
 }
+
+export const persistTimetableData = async (collegeId: string) => {
+  try {
+    const res = await axiosInstance.get(`/timetables/${collegeId}`)
+    return res?.data || []
+  } catch {
+    return []
+  }
+}
+
+export const persistStudentData = async (collegeId: string) => {
+  try {
+    const res = await axiosInstance.get(`/student/college/${collegeId}`)
+    return res?.data || []
+  } catch (error) {
+    console.error('Error fetching student data:', error)
+    return []
+  }
+}
+
+export const persistFacultyData = async () => {
+  try {
+    const res = await axiosInstance.get(`/faculty/exists`)
+    return res?.data || []
+  } catch (error) {
+    console.error('Error fetching student data:', error)
+    return []
+  }
+}

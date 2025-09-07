@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { AddDegreeDialog } from '@/components/custom/Dialogs/AddDegreeDialog'
 import { RefreshCcw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { useState } from 'react'
 
 export const Route = createFileRoute('/_protected/admin/_layout/degrees')({
   component: RouteComponent,
@@ -16,11 +18,25 @@ function RouteComponent() {
     (state: RootState) => state.departmentReducer,
   )
 
+  const [searchQuery, setSearchQuery] = useState('')
+
   const degreesWithDepartments = degrees?.map((degree) => {
     const relatedDepartments = departments.filter((dept) =>
       dept.degreesOffered.includes(degree._id || ''),
     )
     return { ...degree, relatedDepartments }
+  })
+
+  // Filter based on search query
+  const filteredDegrees = degreesWithDepartments?.filter((degree) => {
+    const query = searchQuery.toLowerCase()
+    return (
+      degree.name.toLowerCase().includes(query) ||
+      degree.relatedDepartments.some((d) =>
+        d.name.toLowerCase().includes(query),
+      ) ||
+      (degree.status && degree.status.toLowerCase().includes(query))
+    )
   })
 
   return (
@@ -29,6 +45,12 @@ function RouteComponent() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Degrees</h1>
         <div className="flex items-center gap-2">
+          <Input
+            placeholder="Search degrees..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-64"
+          />
           <Button
             variant={'outline'}
             className="flex gap-1"
@@ -45,8 +67,8 @@ function RouteComponent() {
 
       {/* Degrees List */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {degreesWithDepartments?.length ? (
-          degreesWithDepartments.map((degree) => (
+        {filteredDegrees?.length ? (
+          filteredDegrees.map((degree) => (
             <Card key={degree._id} className="rounded-md">
               <CardHeader>
                 <CardTitle>{degree.name}</CardTitle>

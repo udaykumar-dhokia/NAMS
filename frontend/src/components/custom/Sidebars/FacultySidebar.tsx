@@ -34,32 +34,12 @@ import { Link, useRouterState } from '@tanstack/react-router'
 const items = [
   {
     title: 'Home',
-    url: '/admin/dashboard',
+    url: '/faculty/dashboard',
     icon: Home,
   },
   {
-    title: 'Degrees',
-    url: '/admin/degrees',
-    icon: GraduationCap,
-  },
-  {
-    title: 'Departments',
-    url: '/admin/departments',
-    icon: Building,
-  },
-  {
-    title: 'Courses',
-    url: '/admin/courses',
-    icon: Book,
-  },
-  {
-    title: 'Timetables',
-    url: '/admin/timetable',
-    icon: Calendar,
-  },
-  {
-    title: 'Students',
-    url: '/admin/students',
+    title: 'Attendance',
+    url: '',
     icon: User,
   },
   {
@@ -70,8 +50,7 @@ const items = [
 ]
 
 export function AppSidebar() {
-  const { admin } = useSelector((state: RootState) => state.adminReducer)
-  const { colleges } = useSelector((state: RootState) => state.collegeReducer)
+  const { faculty } = useSelector((state: RootState) => state.facultyReducer)
   const { location } = useRouterState()
 
   return (
@@ -79,8 +58,8 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="flex flex-col items-start my-8">
-            <h1 className="text-xl text-primary">{colleges?.name}</h1>
-            <p>{colleges?.contact?.website}</p>
+            <h1 className="text-xl text-primary">{faculty?.college?.name}</h1>
+            <p>{faculty?.college?.contact?.website}</p>
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -111,7 +90,7 @@ export function AppSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  <User2 /> {admin?.name}
+                  <User2 /> {faculty?.name}
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>

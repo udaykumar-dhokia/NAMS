@@ -11,6 +11,11 @@ const timetableSchema = new mongoose.Schema(
       ref: "Department",
       required: true,
     },
+    college: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "College",
+      required: true,
+    },
     timetable: {
       Mon: [
         {
@@ -20,11 +25,11 @@ const timetableSchema = new mongoose.Schema(
             required: true,
           },
           start: {
-            type: Date,
+            type: String,
             required: true,
           },
           end: {
-            type: Date,
+            type: String,
             required: true,
           },
         },
@@ -36,8 +41,8 @@ const timetableSchema = new mongoose.Schema(
             ref: "Course",
             required: true,
           },
-          start: { type: Date, required: true },
-          end: { type: Date, required: true },
+          start: { type: String, required: true },
+          end: { type: String, required: true },
         },
       ],
       Wed: [
@@ -47,8 +52,8 @@ const timetableSchema = new mongoose.Schema(
             ref: "Course",
             required: true,
           },
-          start: { type: Date, required: true },
-          end: { type: Date, required: true },
+          start: { type: String, required: true },
+          end: { type: String, required: true },
         },
       ],
       Thu: [
@@ -58,8 +63,8 @@ const timetableSchema = new mongoose.Schema(
             ref: "Course",
             required: true,
           },
-          start: { type: Date, required: true },
-          end: { type: Date, required: true },
+          start: { type: String, required: true },
+          end: { type: String, required: true },
         },
       ],
       Fri: [
@@ -69,8 +74,8 @@ const timetableSchema = new mongoose.Schema(
             ref: "Course",
             required: true,
           },
-          start: { type: Date, required: true },
-          end: { type: Date, required: true },
+          start: { type: String, required: true },
+          end: { type: String, required: true },
         },
       ],
       Sat: [
@@ -80,8 +85,8 @@ const timetableSchema = new mongoose.Schema(
             ref: "Course",
             required: true,
           },
-          start: { type: Date, required: true },
-          end: { type: Date, required: true },
+          start: { type: String, required: true },
+          end: { type: String, required: true },
         },
       ],
     },

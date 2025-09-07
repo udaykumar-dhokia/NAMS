@@ -5,6 +5,7 @@ import { setColleges } from '@/store/slices/college.slice'
 import { setCourses } from '@/store/slices/course.slice'
 import { setDegrees } from '@/store/slices/degree.slice'
 import { setDepartments } from '@/store/slices/department.slice'
+import { setTimetables } from '@/store/slices/timetable.slice'
 import { store } from '@/store/store'
 import {
   persistAdminData,
@@ -12,6 +13,8 @@ import {
   persistCourseData,
   persistDegreesData,
   persistDepartmentData,
+  persistStudentData,
+  persistTimetableData,
 } from '@/utils/auth'
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
 
@@ -26,12 +29,15 @@ export const Route = createFileRoute('/_protected/admin/_layout')({
     const degrees = await persistDegreesData(user.college)
     const departments = await persistDepartmentData(user.college)
     const courses = await persistCourseData(user.college)
+    const timetable = await persistTimetableData(user.college)
+    const students = await persistStudentData(user.college)
 
     store.dispatch(setAdmin(user))
     store.dispatch(setColleges(college))
     store.dispatch(setDegrees(degrees))
     store.dispatch(setDepartments(departments))
     store.dispatch(setCourses(courses))
+    store.dispatch(setTimetables(timetable))
   },
 })
 

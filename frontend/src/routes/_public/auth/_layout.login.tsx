@@ -58,13 +58,17 @@ function SimpleRegister() {
         endpoint = '/auth/f/login'
       }
 
-      await axiosInstance.post(endpoint, {
+      const res = await axiosInstance.post(endpoint, {
         email: form.email,
         password: form.password,
       })
 
-      setSuccess('Registered successfully!')
-      navigate({ to: '/admin/dashboard' })
+      setSuccess('Login successfully!')
+      if (form.role === 'admin') {
+        navigate({ to: '/admin/dashboard' })
+      } else {
+        navigate({ to: '/faculty/dashboard' })
+      }
     } catch (err: any) {
       console.error(err)
       setError(err.response?.data?.message || 'Server error')

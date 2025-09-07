@@ -2,6 +2,10 @@ import { Link } from '@tanstack/react-router'
 
 const links = [
   {
+    name: 'Home',
+    path: '/',
+  },
+  {
     name: 'About',
     path: '/about',
   },
